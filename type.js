@@ -1,5 +1,5 @@
 (function(root){
-  class Typewriter {
+  class CType {
     constructor(selector, options = {}) {
       this.element = document.querySelector(selector);
       this.text = options.text || '';
@@ -36,5 +36,5 @@
     }
   }
 
-  root.Typewriter = Typewriter
+  root.CType = CType
 })(window)
