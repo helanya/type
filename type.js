@@ -18,6 +18,7 @@
       this.text = options.text || ''
       this.speed = options.speed || 100
       this.isTyping = false;
+      this.lifeLike = options.lifeLike || true
       this._init()
     }
 
@@ -68,13 +69,17 @@
       this.isTyping = true
 
       let index = 0
+      let delayTime = this.speed
 
       const type = () => {
+        if (this.lifeLike) {
+          delayTime = this.speed * Math.random()
+        }
         if (index < this.text.length) {
           const textNode = document.createTextNode(this.text[index])
           this.element.appendChild(textNode)
           index++
-          setTimeout(type, this.speed)
+          setTimeout(type, delayTime)
         }
       }
       type()
