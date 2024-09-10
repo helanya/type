@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite serve examples",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "start": "vite serve examples"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",
