@@ -46,9 +46,13 @@ class TypeText {
       }
       if (index < strings.length) {
         const textNode = document.createTextNode(strings[index])
+        this.cursor.remove()
         this.element.appendChild(textNode)
+        this.#setCursor()
         index++
         setTimeout(type, delayTime)
+      } else {
+        this.isTyping = false
       }
     }
     type()
