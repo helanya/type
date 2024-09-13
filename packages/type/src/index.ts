@@ -46,9 +46,7 @@ class TypeText {
       }
       if (index < strings.length) {
         const textNode = document.createTextNode(strings[index])
-        this.cursor.remove()
-        this.element.appendChild(textNode)
-        this.#setCursor()
+        this.element.insertBefore(textNode, this.element.querySelector('.type-cursor'))
         index++
         setTimeout(type, delayTime)
       } else {
