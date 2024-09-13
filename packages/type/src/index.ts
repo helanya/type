@@ -1,39 +1,28 @@
-interface Options {
-  strings?: string
-  speed?: number
-  lifeLike?: Boolean
-}
+import { Options, TypeStatus } from './types'
+import {
+  DEFAULT_OPTIONS,
+  CURSOR_CLASS_NAME
+} from './constant'
 
-export let cursorFontStyles = {
-  "font-family": "",
-  "font-weight": "",
-  "font-size": "",
-  "font-style": "",
-  "line-height": "",
-  color: "",
-  transform: "translateX(-.125em)",
-} as const
-
-class TypeText {
+class Typewriter {
   private element: HTMLElement
   private options: Options
-  private isTyping: Boolean = false
   private cursor: HTMLElement
   private id: string
+  private status: TypeStatus = TypeStatus.PENDING
 
   constructor(selector: string, options: Options = {}) {
     this.element = document.querySelector(selector) as HTMLElement
-    this.options = options
-    this.isTyping = false
+    this.options = Object.assign({}, DEFAULT_OPTIONS, options)
     this.id = `type-${(new Date()).getTime()}`
     this.element.dataset.id = this.id
     this.cursor = this.#createCursor()
   }
 
   start() {
-    if (this.isTyping) return this
+    if (this.status === TypeStatus.STARTING) return this
     this.#setCursor()
-    this.isTyping = true
+    this.status = TypeStatus.STARTING
     const strings = this.options.strings || ''
 
     let index = 0
@@ -50,7 +39,7 @@ class TypeText {
         index++
         setTimeout(type, delayTime)
       } else {
-        this.isTyping = false
+        this.status = TypeStatus.FULFILLED
       }
     }
     type()
@@ -60,7 +49,7 @@ class TypeText {
 
   #createCursor() {
     let cursor = document.createElement('span')
-    cursor.className = 'type-cursor'
+    cursor.className = CURSOR_CLASS_NAME
     cursor.innerHTML = '|'
     cursor.animate(
       [
@@ -95,4 +84,4 @@ class TypeText {
 
 }
 
-export default TypeText
+export default Typewriter
